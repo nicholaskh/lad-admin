@@ -1,5 +1,7 @@
-package com.lad.admin.dao;
+package com.lad.admin.infor.dao;
 
+import com.lad.admin.dao.Pager;
+import com.lad.admin.infor.model.HealthBo;
 import com.mongodb.WriteResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,19 +19,19 @@ import java.util.Set;
 
 /**
  * 功能描述：
- * Copyright: Copyright (c) 2017
+ * Copyright: Copyright (c) 2018
  * Version: 1.0
- * Time:2017/7/8
+ * Time:2018/3/19
  */
-public class BaseDao<T extends Serializable> {
+public class InforBaseDao<T extends Serializable> {
 
     @Autowired
-    @Qualifier("baseMongo")
-    private MongoTemplate mongoTemplate;
+    @Qualifier("inforMongo")
+    private MongoTemplate inforMongoTemplate;
 
-    
-    public MongoTemplate getMongoTemplate() {
-        return mongoTemplate;
+
+    public MongoTemplate getInforMongoTemplate() {
+        return inforMongoTemplate;
     }
 
     /**
@@ -56,7 +58,7 @@ public class BaseDao<T extends Serializable> {
      * @return
      */
     public List<T> finaAll(){
-       return mongoTemplate.findAll(getClz());
+        return inforMongoTemplate.findAll(getClz());
     }
 
     /**
@@ -67,7 +69,7 @@ public class BaseDao<T extends Serializable> {
     public T findById(String id){
         Query query = new Query();
         query.addCriteria(new Criteria("_id").is(id));
-        return mongoTemplate.findOne(query, getClz());
+        return inforMongoTemplate.findOne(query, getClz());
     }
 
     /**
@@ -76,7 +78,17 @@ public class BaseDao<T extends Serializable> {
      * @return
      */
     public T insert(T t){
-        mongoTemplate.insert(t);
+        inforMongoTemplate.insert(t);
+        return t;
+    }
+
+    /**
+     * 插入
+     * @param t
+     * @return
+     */
+    public T save(T t){
+        inforMongoTemplate.save(t);
         return t;
     }
 
@@ -95,7 +107,7 @@ public class BaseDao<T extends Serializable> {
                 update.set(entry.getKey(), entry.getValue());
             }
         }
-        return mongoTemplate.updateFirst(query, update, getClz());
+        return inforMongoTemplate.updateFirst(query, update, getClz());
     }
 
     /**
@@ -103,8 +115,17 @@ public class BaseDao<T extends Serializable> {
      * @param id
      */
     public WriteResult deleteById(String id) {
-        return mongoTemplate.remove(new Query(new Criteria("_id").is(id)), getClz());
+        return inforMongoTemplate.remove(new Query(new Criteria("_id").is(id)), getClz());
     }
+
+    /**
+     * 删除数据
+     * @param id
+     */
+    public WriteResult batchDeleteByIds(String... ids) {
+        return inforMongoTemplate.remove(new Query(new Criteria("_id").in(ids)), getClz());
+    }
+
 
     /**
      * 注销数据
@@ -115,7 +136,7 @@ public class BaseDao<T extends Serializable> {
         query.addCriteria(new Criteria("_id").is(id));
         Update update = new Update();
         update.set("deleted", 1);
-        return mongoTemplate.updateFirst(query, update, getClz());
+        return inforMongoTemplate.updateFirst(query, update, getClz());
     }
 
     /**
@@ -132,7 +153,7 @@ public class BaseDao<T extends Serializable> {
             }
         }
         query.with(new Sort(new Sort.Order(Sort.Direction.DESC, "_id")));
-        return mongoTemplate.find(query, getClz());
+        return inforMongoTemplate.find(query, getClz());
     }
 
     /**
@@ -142,14 +163,70 @@ public class BaseDao<T extends Serializable> {
      * @return
      */
     public Pager<T> findByPages(Query query, Pager pager) {
+        query.with(new Sort(new Sort.Order(Sort.Direction.DESC, "_id")));
         query.skip((pager.getPageNumber()-1)*pager.getPageSize());
         query.limit(pager.getPageSize());
-        query.addCriteria(new Criteria("deleted").is(0));
-        query.with(new Sort(new Sort.Order(Sort.Direction.DESC, "_id")));
-        long total = mongoTemplate.count(query, getClz());
-        pager.setDatas(mongoTemplate.find(query, getClz()));
+        long total = inforMongoTemplate.count(query, getClz());
+        pager.setDatas(inforMongoTemplate.find(query, getClz()));
         pager.setTotal(total);
         return pager;
+    }
+
+
+    /**
+     * 根据条件查询，只适合等于条件,主键降序排列
+     * @param query
+     * @param pager
+     * @return
+     */
+    public List<T> findByPages(Query query, int page, int limit) {
+        query.with(new Sort(new Sort.Order(Sort.Direction.DESC, "_id")));
+        query.skip((page-1)*limit);
+        query.limit(limit);
+        return inforMongoTemplate.find(query, getClz());
+    }
+
+    /**
+     * 更新model
+     * @param oldModule
+     * @param newModule
+     */
+    public void updateModule(String oldModule, String newModule){
+        Query query = new Query();
+        query.addCriteria(new Criteria("module").is(oldModule));
+        Update update = new Update();
+        update.set("module", newModule);
+        inforMongoTemplate.updateMulti(query, update, getClz());
+    }
+
+
+    /**
+     * 更新二级分类名称
+     * @param oldName
+     * @param newName
+     */
+    public void updateClassName(String oldName, String newName){
+        Query query = new Query();
+        query.addCriteria(new Criteria("className").is(oldName));
+        Update update = new Update();
+        update.set("className", newName);
+        inforMongoTemplate.updateMulti(query, update, getClz());
+    }
+
+    /**
+     * 根据inforid修改参数信息
+     * @param inforid
+     * @param values
+     * @return
+     */
+    public WriteResult saveByParams(String inforid, Map<String, Object> values){
+        Query query = new Query();
+        query.addCriteria(new Criteria("_id").is(inforid));
+        Update update = new Update();
+        values.forEach((key, value) -> {
+            update.set(key, value);
+        });
+        return inforMongoTemplate.updateFirst(query, update, getClz());
     }
 
 }
