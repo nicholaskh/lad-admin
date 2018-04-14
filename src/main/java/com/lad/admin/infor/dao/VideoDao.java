@@ -1,6 +1,5 @@
 package com.lad.admin.infor.dao;
 
-import com.lad.admin.infor.model.RadioBo;
 import com.lad.admin.infor.model.VideoBo;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.aggregation.*;
@@ -59,14 +58,7 @@ public class VideoDao extends InforBaseDao<VideoBo>{
 
 
     public List<VideoBo> findByKeyword(String keyword, int page, int limit){
-        Query query = new Query();
-        Criteria criteria = new Criteria();
-        Pattern pattern = Pattern.compile("^.*"+keyword+".*$", Pattern.CASE_INSENSITIVE);
-        criteria.orOperator(new Criteria("title").regex(pattern));
-        criteria.orOperator(new Criteria("module").regex(pattern));
-        criteria.orOperator(new Criteria("className").regex(pattern));
-        query.addCriteria(criteria);
-        return findByPages(query, page, limit);
+        return findByTitleKeyword(keyword, page, limit);
     }
 
     public List<VideoBo> findByVIPLevel(int level, int page, int limit){

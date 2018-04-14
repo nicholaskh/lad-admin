@@ -1,7 +1,6 @@
 package com.lad.admin.infor.dao;
 
 import com.lad.admin.dao.Pager;
-import com.lad.admin.infor.model.HealthBo;
 import com.mongodb.WriteResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,6 +15,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * 功能描述：
@@ -120,7 +120,7 @@ public class InforBaseDao<T extends Serializable> {
 
     /**
      * 删除数据
-     * @param id
+     * @param ids
      */
     public WriteResult batchDeleteByIds(String... ids) {
         return inforMongoTemplate.remove(new Query(new Criteria("_id").in(ids)), getClz());
@@ -176,7 +176,6 @@ public class InforBaseDao<T extends Serializable> {
     /**
      * 根据条件查询，只适合等于条件,主键降序排列
      * @param query
-     * @param pager
      * @return
      */
     public List<T> findByPages(Query query, int page, int limit) {
@@ -227,6 +226,14 @@ public class InforBaseDao<T extends Serializable> {
             update.set(key, value);
         });
         return inforMongoTemplate.updateFirst(query, update, getClz());
+    }
+
+    public List<T> findByTitleKeyword(String keyword, int page, int limit){
+        Query query = new Query();
+        Pattern pattern = Pattern.compile("^.*"+keyword+".*$", Pattern.CASE_INSENSITIVE);
+        Criteria criteria = new Criteria("title").regex(pattern);
+        query.addCriteria(criteria);
+        return findByPages(query, page, limit);
     }
 
 }

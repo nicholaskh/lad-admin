@@ -1,6 +1,5 @@
 package com.lad.admin.infor.dao;
 
-import com.lad.admin.infor.model.HealthBo;
 import com.lad.admin.infor.model.RadioBo;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.aggregation.*;
@@ -9,6 +8,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -25,14 +25,16 @@ public class RadioDao extends InforBaseDao<RadioBo> {
     public List<RadioBo> findByModuleClassName(String module, String className, int page, int limit){
         Query query = new Query();
         Criteria criteria = new Criteria();
+        List<Criteria> criteriaList = new ArrayList<>();
         if (!StringUtils.isEmpty(module)) {
             Pattern pattern = Pattern.compile("^.*"+module+".*$", Pattern.CASE_INSENSITIVE);
-            criteria.orOperator(new Criteria("module").regex(pattern));
+            criteriaList.add(new Criteria("module").regex(pattern));
         }
         if (!StringUtils.isEmpty(className)) {
             Pattern pattern = Pattern.compile("^.*"+className+".*$", Pattern.CASE_INSENSITIVE);
-            criteria.orOperator(new Criteria("className").regex(pattern));
+            criteriaList.add(new Criteria("className").regex(pattern));
         }
+        criteria.orOperator(criteriaList.toArray(new Criteria[]{}));
         query.addCriteria(criteria);
         return findByPages(query, page, limit);
     }
@@ -63,9 +65,7 @@ public class RadioDao extends InforBaseDao<RadioBo> {
         Query query = new Query();
         Criteria criteria = new Criteria();
         Pattern pattern = Pattern.compile("^.*"+keyword+".*$", Pattern.CASE_INSENSITIVE);
-        criteria.orOperator(new Criteria("title").regex(pattern));
-        criteria.orOperator(new Criteria("module").regex(pattern));
-        criteria.orOperator(new Criteria("className").regex(pattern));
+        criteria.orOperator(new Criteria("title").regex(pattern), new Criteria("intro").regex(pattern));
         query.addCriteria(criteria);
         return findByPages(query, page, limit);
     }
