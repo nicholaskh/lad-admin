@@ -1,13 +1,14 @@
 package com.lad.admin.infor.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import java.io.Serializable;
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 功能描述：资讯分类表
@@ -19,6 +20,7 @@ import java.util.Date;
 @Getter
 @ToString
 @Document(collection = "inforClasses")
+@SuppressWarnings("all")
 public class InforClassesBo implements Serializable {
 
     public static final int HEALTH = 1;
@@ -31,12 +33,17 @@ public class InforClassesBo implements Serializable {
 
     @Id
     private String id;
+    
+    
     //分类名称
-    private String name;
-    //分类级别， 1表示一级， 2表示二级分类
-    private int level;
+    private String name;    
+    
     //分类类型， 1 健康，2 安防，3 广播，4 视频
     private int type;
+    
+    //分类级别， 1表示一级， 2表示二级分类
+    private int level;
+
     //0 未删除  1已删除
     private int deleted;
 

@@ -7,19 +7,45 @@ spring:
       base:
         database: mongo
         uri: 180.76.138.200:26134
-#        uri: 192.168.0.5:26134
+#       uri: 192.168.0.5:26134
         username: apple2
         password: 1u#3WeiMLfg!A&#G1^JcB&sUGatMaa1I
         repositories: true
       infor:
         database: news
         uri: 180.76.138.200:26134
-#        uri: 192.168.0.5:26134
+#       uri: 192.168.0.5:26134
         username: apple2
         password: 1u#3WeiMLfg!A&#G1^JcB&sUGatMaa1I
         repositories: true
+# {collection:[{type:1,collectionName:health,service:IHealthService}]}
+collection:
+  - 
+    type: 1
+    collectionName: health
+    class: com.lad.admin.infor.dao.HealthDao
+  - 
+    type: 2
+    collectionName: security
+    class: com.lad.admin.infor.model.SecurityBo
+  - 
+    type: 3
+    collectionName: broadcast
+    class: com.lad.admin.infor.model.RadioBo
+  - 
+    type: 4
+    collectionName: video
+    class: com.lad.admin.infor.model.VideoBo
+  - 
+    type: 5
+    collectionName: dailynews
+    class: com.lad.admin.infor.model.DailNewsBo
+  - 
+    type: 6
+    collectionName: yanglao
+    class: com.lad.admin.infor.model.YanglaoBo
 
-
+    
 #  thymeleaf:
 #    cache: false
 #    check-template-location: true

@@ -19,24 +19,15 @@ import java.util.Date;
 @Getter
 @ToString
 @Document(collection = "video")
-public class VideoBo implements Serializable {
+public class VideoBo extends ResultBo implements Serializable {
 
-    @Id
-    private String id;
+
 
     private String sourceUrl;
-
-    private String title;
-
-    private String source;
 
     private String url;
 
     private String poster;
-
-    private String module;
-
-    private String className;
 
     private int num;
 

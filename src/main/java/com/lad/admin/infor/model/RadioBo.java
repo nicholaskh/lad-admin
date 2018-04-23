@@ -19,22 +19,13 @@ import java.util.Date;
 @Getter
 @ToString
 @Document(collection = "broadcast")
-public class RadioBo implements Serializable {
+public class RadioBo extends ResultBo implements Serializable {
 
-    @Id
-    private String id;
+
 
     private String sourceUrl;
 
-    private String title;
-
-    private String module;
-
     private String play_times;
-
-    private String className;
-
-    private String source;
 
     private String intro;
 

@@ -1,11 +1,9 @@
 package com.lad.admin.service;
 
-import com.lad.admin.infor.model.HealthBo;
-import com.lad.admin.infor.model.RadioBo;
-import com.mongodb.WriteResult;
-
 import java.util.List;
 import java.util.Map;
+
+import com.mongodb.WriteResult;
 
 /**
  * 功能描述：

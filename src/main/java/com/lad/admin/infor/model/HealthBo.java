@@ -19,23 +19,12 @@ import java.util.LinkedList;
 @Setter
 @Getter
 @Document(collection = "health")
-public class HealthBo implements Serializable {
-
-    @Id
-    private String id;
-
-    //模块名字
-    private String module;
-
-    private String className;
+public class HealthBo extends ResultBo implements Serializable {
+    
+    // 消息来源链接
+    private String sourceUrl;
 
     private int classNum;
-
-    private String title;
-
-    private String source;
-
-    private String sourceUrl;
 
     private LinkedList<String> imageUrls;
 

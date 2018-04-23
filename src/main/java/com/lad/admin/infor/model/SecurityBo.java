@@ -19,13 +19,13 @@ import java.util.Date;
 @Getter
 @ToString
 @Document(collection = "security")
-public class SecurityBo implements Serializable {
+public class SecurityBo extends ResultBo implements Serializable {
 
-    @Id
-    private String id;
 
-    private String title;
-
+    
+    // 消息来源链接
+    private String sourceUrl;
+    
     private String newsType;
 
     private String time;
@@ -33,8 +33,6 @@ public class SecurityBo implements Serializable {
     private String text;
 
     private String city;
-
-    private String sourceUrl;
 
     private int visitNum;
 
