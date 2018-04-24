@@ -19,7 +19,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@Document(collection = "inforClasses")
+@Document(collection = "commons")
 @SuppressWarnings("all")
 public class InforClassesBo implements Serializable {
 
