@@ -41,7 +41,7 @@ public class CommUtils {
      * @param Integer type
      * @return String collectionName 
      */
-	public static Map<String,String> selectCollection(Integer string) {
+	public static Map<String,String> selectCollection(Integer type) {
 		Map<String,String> map = new HashMap<String,String>();
 		String collectionName = null;
 		String entity = null;
@@ -57,7 +57,7 @@ public class CommUtils {
 						for (HashMap<String, Object> hashMap : value) {
 
 
-							if ((Integer) hashMap.get("type") == string) {
+							if ((Integer) hashMap.get("type") == type) {
 								collectionName = (String) hashMap.get("collectionName");
 								entity = (String) hashMap.get("class");
 							}

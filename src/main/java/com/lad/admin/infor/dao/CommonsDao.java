@@ -144,8 +144,7 @@ public class CommonsDao extends InforBaseDao<InforClassesBo> {
 		Criteria criteria = Criteria.where("_id").is(id);
 		query.addCriteria(criteria);
 
-		ResultBo findOne = (ResultBo) inforMongoTemplate.findOne(query, clazz, collection);
-		
+		ResultBo findOne = (ResultBo) inforMongoTemplate.findOne(query, clazz);
 		return findOne;
 	}
 

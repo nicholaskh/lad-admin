@@ -23,7 +23,7 @@ collection:
   - 
     type: 1
     collectionName: health
-    class: com.lad.admin.infor.dao.HealthDao
+    class: com.lad.admin.infor.model.HealthBo
   - 
     type: 2
     collectionName: security

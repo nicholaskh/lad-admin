@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 
+import org.springframework.data.annotation.Id;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -21,7 +23,7 @@ import lombok.ToString;
 @ApiModel(value="InsertVo",description="插入资讯实体")
 public class InsertVo implements Serializable {
 	
-	@ApiModelProperty(value="资讯id",name="inforid",required=true)
+	@ApiModelProperty(value="资讯id",name="inforid")
     private String inforid;
 
     @ApiModelProperty(value="资讯来源网址")

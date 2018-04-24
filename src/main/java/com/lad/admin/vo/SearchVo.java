@@ -15,7 +15,6 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-//@Document(collection = "search")
 public class SearchVo implements Serializable {
 	
 	private Integer type;

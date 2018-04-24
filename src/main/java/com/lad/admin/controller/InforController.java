@@ -718,7 +718,6 @@ public class InforController extends BaseController {
 		try {
 			resultBo = (ResultBo) Class.forName(entityName).newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		BeanUtils.copyProperties(insertVo, resultBo);
@@ -727,9 +726,9 @@ public class InforController extends BaseController {
 	}
 	
 	@ApiOperation(value = "修改资讯", notes = "修改信息")
-	@PutMapping("/health/update")
+	@PutMapping("/update")
 	public String update(
-			@RequestBody @ApiParam(name = "healthVo", value = "资讯实体类，只传入需要修改的对象及inforid", required = true) InsertVo insertVo) {
+			@RequestBody @ApiParam(name = "InsertVo", value = "资讯实体类，只传入需要修改的对象及inforid", required = true) InsertVo insertVo) {
 		if (insertVo == null || StringUtils.isEmpty(insertVo.getInforid())) {
 			return setErrorResp(-1, "资讯inforid为空");
 		}
