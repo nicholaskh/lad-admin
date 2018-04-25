@@ -760,7 +760,7 @@ public class InforController extends BaseController {
 		return setSuccessResp("inforid", insertVo.getInforid());
 	}
 	
-	@ApiOperation(value = "删除指定健康资讯")
+	@ApiOperation(value = "删除指定资讯")
 	@ApiImplicitParam(name = "inforid", value = "资讯ID", required = true, paramType = "path", dataType = "string")
 	@DeleteMapping("/delete/{type}/{inforid}")
 	public String delete(@PathVariable Integer type,@PathVariable String inforid) {
