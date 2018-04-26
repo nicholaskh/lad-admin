@@ -697,7 +697,7 @@ public class InforController extends BaseController {
 		String collectionName = map.get(CommUtils.COLLECTION_NAME);
 		Class<?> clazz = null;
 		try {
-			clazz = Class.forName(map.get("entity"));
+			clazz = Class.forName(map.get(CommUtils.ENTITY_NAME));
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
