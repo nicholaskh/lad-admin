@@ -1,6 +1,7 @@
 package com.lad.admin.utils;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -47,10 +48,9 @@ public class CommUtils {
 		String entity = null;
 		try {
 			Yaml yaml = new Yaml();
-			URL url = InforController.class.getClassLoader().getResource("application.yaml");
-
+			InputStream url = InforController.class.getResourceAsStream("/application.yaml");
 			if (url != null) {
-				Map<String, List<HashMap<String, Object>>> obj = (Map) yaml.load(new FileInputStream(url.getFile()));
+				Map<String, List<HashMap<String, Object>>> obj = (Map) yaml.load(url);
 				for (Entry<String, List<HashMap<String, Object>>> iterable_element : obj.entrySet()) {
 					if ("collection".equals(iterable_element.getKey())) {
 						List<HashMap<String, Object>> value = iterable_element.getValue();

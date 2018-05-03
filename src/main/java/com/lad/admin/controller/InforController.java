@@ -711,6 +711,9 @@ public class InforController extends BaseController {
 	@PostMapping("/insert")
 	public String insertNews(
 			@RequestBody @ApiParam(name = "InsertVo", value = "资讯实体类", required = true) InsertVo insertVo) {
+		if(insertVo.getType() == null){
+			return setErrorResp(-1, "请选择分类");
+		}
 		Map<String, String> map = CommUtils.selectCollection(insertVo.getType());
 		String entityName = map.get(CommUtils.ENTITY_NAME);
 		String collectionName = map.get(CommUtils.COLLECTION_NAME);
@@ -774,11 +777,13 @@ public class InforController extends BaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(clazz);
 		WriteResult result = commonsService.deleteById(inforid,clazz);
-		if (result.isUpdateOfExisting()) {
-			return COM_RESP;
+		if (result.getN() == 0) {
+			return setErrorResp(-1, "删除失败");
 		}
-		return setErrorResp(-1, "删除失败");
+		return setErrorResp(0, "删除成功");
+		
 	}
 
 	@ApiOperation(value = "删除指定资讯")

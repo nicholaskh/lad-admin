@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lad.admin.infor.model.InforClassesBo;
 import com.lad.admin.infor.model.ResultBo;
+import com.lad.admin.infor.model.SecurityBo;
 import com.lad.admin.utils.CommUtils;
 import com.lad.admin.vo.SearchVo;
 import com.mongodb.WriteResult;
@@ -168,7 +169,10 @@ public class CommonsDao extends InforBaseDao<InforClassesBo> {
 
 	public WriteResult deleteById(String inforid, Class clazz) {
 		// TODO Auto-generated method stub
-		return inforMongoTemplate.remove(new Query(new Criteria("_id").is(inforid)), clazz);
+		WriteResult remove = inforMongoTemplate.remove(new Query(new Criteria("_id").is(inforid)), SecurityBo.class);
+//		WriteResult remove = inforMongoTemplate.remove(new Query(new Criteria("_id").is(inforid)), clazz);
+		System.out.println(remove);
+		return remove;
 	}
 
 	public WriteResult deleteByIds(String[] inforidArr, Class clazz) {
