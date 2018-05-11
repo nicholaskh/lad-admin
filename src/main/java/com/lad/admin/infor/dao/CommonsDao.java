@@ -17,7 +17,6 @@ import org.springframework.stereotype.Repository;
 
 import com.lad.admin.infor.model.InforClassesBo;
 import com.lad.admin.infor.model.ResultBo;
-import com.lad.admin.infor.model.SecurityBo;
 import com.lad.admin.utils.CommUtils;
 import com.lad.admin.vo.SearchVo;
 import com.mongodb.WriteResult;
@@ -127,9 +126,7 @@ public class CommonsDao extends InforBaseDao<InforClassesBo> {
 				Set<String> collectionNames = inforMongoTemplate.getCollectionNames();
 				List<ResultBo> list = new ArrayList<ResultBo>();
 				
-				List<ResultBo> find = inforMongoTemplate.find(query, ResultBo.class, "health");
-
-				
+				List<ResultBo> find = inforMongoTemplate.find(query, ResultBo.class, "health");				
 				return find;
 			}
 
@@ -144,20 +141,17 @@ public class CommonsDao extends InforBaseDao<InforClassesBo> {
 		Query query = new Query();
 		Criteria criteria = Criteria.where("_id").is(id);
 		query.addCriteria(criteria);
-
 		ResultBo findOne = (ResultBo) inforMongoTemplate.findOne(query, clazz);
 		return findOne;
 	}
 
 
 	public void insert(ResultBo resultBo, String collectionName) {
-		// TODO Auto-generated method stub
 		inforMongoTemplate.insert(resultBo, collectionName);
 		
 	}
 
 	public WriteResult saveByParams(String inforid, Map<String, Object> values, Class clazz) {
-		// TODO Auto-generated method stub
         Query query = new Query();
         query.addCriteria(new Criteria("_id").is(inforid));
         Update update = new Update();
@@ -168,16 +162,21 @@ public class CommonsDao extends InforBaseDao<InforClassesBo> {
 	}
 
 	public WriteResult deleteById(String inforid, Class clazz) {
-		// TODO Auto-generated method stub
-		WriteResult remove = inforMongoTemplate.remove(new Query(new Criteria("_id").is(inforid)), SecurityBo.class);
-//		WriteResult remove = inforMongoTemplate.remove(new Query(new Criteria("_id").is(inforid)), clazz);
-		System.out.println(remove);
+		WriteResult remove = inforMongoTemplate.remove(new Query(new Criteria("_id").is(inforid)), clazz);
 		return remove;
 	}
 
 	public WriteResult deleteByIds(String[] inforidArr, Class clazz) {
-		// TODO Auto-generated method stub
 		return inforMongoTemplate.remove(new Query(new Criteria("_id").in(inforidArr)), clazz);
+	}
+
+	public InforClassesBo findClass(Integer type) {
+		Query query = new Query();
+		Criteria criteria = new Criteria();
+		criteria.andOperator(Criteria.where("level").is(1),Criteria.where("type").is(type));
+		query.addCriteria(criteria);
+		InforClassesBo findOne = inforMongoTemplate.findOne(query, InforClassesBo.class, "commons");
+		return findOne;
 	}
 
 }

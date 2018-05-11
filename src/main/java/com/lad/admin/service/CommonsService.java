@@ -27,5 +27,7 @@ public interface CommonsService extends IBaseService<InforClassesBo> {
 
 	WriteResult deleteById(String inforid, Class clazz);
 
+	InforClassesBo findClass(Integer type);
+
 //	void insertlevel2Date();
 }

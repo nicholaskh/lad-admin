@@ -6,9 +6,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 @Setter
 @Getter
 @Document(collection="dailynews")
+@ToString
 public class DailNewsBo extends ResultBo implements Serializable {
 
 }

@@ -19,6 +19,7 @@ import java.util.LinkedList;
 @Setter
 @Getter
 @Document(collection = "health")
+@ToString
 public class HealthBo extends ResultBo implements Serializable {
     
     // 消息来源链接

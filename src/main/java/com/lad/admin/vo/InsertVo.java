@@ -41,10 +41,6 @@ public class InsertVo implements Serializable {
     @ApiModelProperty(value="资讯一级type",required=true)
     private Integer type;    
     
-    @ApiModelProperty(value="资讯一级分类",required=true)
-    private String module;
-    
-
     @ApiModelProperty(value="资讯二级分类",required=true)
     private String className;
     
@@ -78,4 +74,7 @@ public class InsertVo implements Serializable {
     @ApiModelProperty(value="视频资讯缩略图地址")
     private String poster;
 
+    @ApiModelProperty(value="当前状态")
+    // 1 启用 2 禁用
+    private Integer status;
 }

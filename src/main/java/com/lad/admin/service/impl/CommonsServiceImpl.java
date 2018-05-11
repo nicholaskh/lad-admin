@@ -27,13 +27,11 @@ public class CommonsServiceImpl implements CommonsService {
 
 	@Override
 	public List<String> findSource(String collection) {
-		// TODO Auto-generated method stub
 		return commonDao.findSource(collection);
 	}
 	
 	@Override
 	public List<ResultBo> searchList(SearchVo searchVo) {
-		// TODO Auto-generated method stub
 		return commonDao.searchList(searchVo);
 	}
 
@@ -44,19 +42,16 @@ public class CommonsServiceImpl implements CommonsService {
 
 	@Override
 	public void insert(ResultBo resultBo,String collectionName) {
-		// TODO Auto-generated method stub
 		commonDao.insert(resultBo,collectionName);
 	}
 	
 	@Override
 	public WriteResult saveByParams(String inforid, Map<String, Object> params, Class clazz) {
-		// TODO Auto-generated method stub
 		return commonDao.saveByParams(inforid,params,clazz);
 	}
 	
 	@Override
 	public WriteResult deleteById(String inforid, Class clazz) {
-		// TODO Auto-generated method stub
 		return commonDao.deleteById(inforid, clazz);
 	}
 
@@ -65,7 +60,11 @@ public class CommonsServiceImpl implements CommonsService {
 		// TODO Auto-generated method stub
 		return commonDao.deleteByIds(inforidArr, clazz);
 	}
-	
+	@Override
+	public InforClassesBo findClass(Integer type) {
+		// TODO Auto-generated method stub
+		return commonDao.findClass(type);
+	}
 	
 	
 	
@@ -142,6 +141,8 @@ public class CommonsServiceImpl implements CommonsService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 
 
