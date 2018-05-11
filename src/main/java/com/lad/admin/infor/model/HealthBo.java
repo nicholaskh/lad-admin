@@ -1,14 +1,14 @@
 package com.lad.admin.infor.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
+
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 功能描述： 咨询

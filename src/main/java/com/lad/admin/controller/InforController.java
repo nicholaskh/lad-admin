@@ -75,11 +75,15 @@ public class InforController extends BaseController {
 	@ApiOperation(value = "查询资讯列表", notes = "依据条件查询资讯列表")
 	@PostMapping("/news-search")
 	public String searchList(
-			@RequestBody @ApiParam(name = "searchBo", value = "封装前端请求参数的实体", required = true) SearchVo searchVo) {
-
-		List<ResultBo> list = commonsService.searchList(searchVo);
+			@RequestBody @ApiParam(name = "searchVo", value = "封装前端请求参数的实体", required = true) SearchVo searchVo) {
+		
+		List<ResultBo> list = new ArrayList<ResultBo>();
+		if(searchVo.getPage() != null && searchVo.getLimit()!=null){
+			list = commonsService.searchList(searchVo);
+		}else{
+			return "请设置分页参数";
+		}
 		String json = JSONArray.toJSONString(list);
-
 		return json;
 	}
 	
