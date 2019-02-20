@@ -5,14 +5,6 @@ import java.util.Map;
 
 import com.mongodb.WriteResult;
 
-/**
- * 功能描述：
- * Copyright: Copyright (c) 2018
- * Company: travelsky
- * Author: esdong
- * Version: 1.0
- * Time:2018/3/22
- */
 public interface IBaseService<T> {
 
     /**
